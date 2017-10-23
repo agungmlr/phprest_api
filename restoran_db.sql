@@ -1,260 +1,162 @@
--- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: 23 Okt 2017 pada 12.10
--- Versi Server: 10.1.26-MariaDB
--- PHP Version: 7.1.9
+/*
+SQLyog Ultimate v12.4.1 (64 bit)
+MySQL - 10.1.26-MariaDB : Database - restoran_db
+*********************************************************************
+*/
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+/*!40101 SET NAMES utf8 */;
 
+/*!40101 SET SQL_MODE=''*/;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`restoran_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
---
--- Database: `restoran_db`
---
+USE `restoran_db`;
 
--- --------------------------------------------------------
+/*Table structure for table `belanja` */
 
---
--- Struktur dari tabel `belanja`
---
+DROP TABLE IF EXISTS `belanja`;
 
 CREATE TABLE `belanja` (
   `id_belanja` int(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `total` int(11) DEFAULT NULL
+  `total` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_belanja`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+/*Data for the table `belanja` */
 
---
--- Struktur dari tabel `histori_makanan`
---
+/*Table structure for table `histori_makanan` */
+
+DROP TABLE IF EXISTS `histori_makanan`;
 
 CREATE TABLE `histori_makanan` (
   `no_nota` int(11) NOT NULL,
   `makanan` varchar(30) NOT NULL,
   `harga` int(11) NOT NULL,
-  `qty` int(11) NOT NULL
+  `qty` int(11) NOT NULL,
+  KEY `no_nota` (`no_nota`),
+  CONSTRAINT `histori_makanan_ibfk_1` FOREIGN KEY (`no_nota`) REFERENCES `histori_nota` (`no_nota`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+/*Data for the table `histori_makanan` */
 
---
--- Struktur dari tabel `histori_nota`
---
+/*Table structure for table `histori_nota` */
+
+DROP TABLE IF EXISTS `histori_nota`;
 
 CREATE TABLE `histori_nota` (
   `no_nota` int(11) NOT NULL,
   `tanggal` date NOT NULL,
   `no_meja` int(2) NOT NULL,
   `tax` int(11) NOT NULL,
-  `total` int(11) NOT NULL
+  `total` int(11) NOT NULL,
+  PRIMARY KEY (`no_nota`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+/*Data for the table `histori_nota` */
 
---
--- Struktur dari tabel `kadaluarsa`
---
+/*Table structure for table `kadaluarsa` */
+
+DROP TABLE IF EXISTS `kadaluarsa`;
 
 CREATE TABLE `kadaluarsa` (
   `id_makanan` int(11) NOT NULL,
   `tgl_kadaluarsa` date NOT NULL,
   `stok` int(11) NOT NULL,
-  `status` int(1) DEFAULT NULL
+  `status` int(1) DEFAULT NULL,
+  KEY `id_makanan` (`id_makanan`),
+  CONSTRAINT `kadaluarsa_ibfk_1` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+/*Data for the table `kadaluarsa` */
 
---
--- Struktur dari tabel `makanan`
---
+/*Table structure for table `makanan` */
+
+DROP TABLE IF EXISTS `makanan`;
 
 CREATE TABLE `makanan` (
   `id_makanan` int(11) NOT NULL,
   `nama` varchar(30) NOT NULL,
   `deskripsi` varchar(60) NOT NULL,
   `harga_beli` int(11) NOT NULL,
-  `harga_jual` int(11) NOT NULL
+  `harga_jual` int(11) NOT NULL,
+  PRIMARY KEY (`id_makanan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `makanan`
---
+/*Data for the table `makanan` */
 
-INSERT INTO `makanan` (`id_makanan`, `nama`, `deskripsi`, `harga_beli`, `harga_jual`) VALUES
-(2, 'Mie Goreng', 'Ditambah dengan telor dadar', 16000, 21000),
-(3, 'Nasi Kuning', 'Enak Sekali', 9000, 13000),
-(4, 'Ikan Asin', 'Khas Pangandaran', 10000, 25000);
+insert  into `makanan`(`id_makanan`,`nama`,`deskripsi`,`harga_beli`,`harga_jual`) values 
+(2,'Mie Goreng','Ditambah dengan telor dadar',16000,21000),
+(3,'Nasi Kuning','Enak Sekali',9000,13000),
+(4,'Ikan Asin','Khas Pangandaran',10000,25000);
 
--- --------------------------------------------------------
+/*Table structure for table `meja` */
 
---
--- Struktur dari tabel `meja`
---
+DROP TABLE IF EXISTS `meja`;
 
 CREATE TABLE `meja` (
   `no_meja` int(3) NOT NULL,
   `seat` int(2) NOT NULL,
-  `status` int(1) DEFAULT NULL
+  `status` int(1) DEFAULT NULL,
+  PRIMARY KEY (`no_meja`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+/*Data for the table `meja` */
 
---
--- Struktur dari tabel `nota`
---
+/*Table structure for table `nota` */
+
+DROP TABLE IF EXISTS `nota`;
 
 CREATE TABLE `nota` (
-  `no_nota` int(11) NOT NULL,
+  `no_nota` int(11) NOT NULL AUTO_INCREMENT,
   `tanggal` date NOT NULL,
   `tax` int(11) NOT NULL,
   `total` int(11) NOT NULL,
-  `no_meja` int(2) NOT NULL
+  `no_meja` int(2) NOT NULL,
+  PRIMARY KEY (`no_nota`),
+  KEY `no_meja` (`no_meja`),
+  CONSTRAINT `nota_ibfk_1` FOREIGN KEY (`no_meja`) REFERENCES `meja` (`no_meja`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+/*Data for the table `nota` */
 
---
--- Struktur dari tabel `rincian_belanja`
---
+/*Table structure for table `rincian_belanja` */
+
+DROP TABLE IF EXISTS `rincian_belanja`;
 
 CREATE TABLE `rincian_belanja` (
   `id_makanan` int(11) NOT NULL,
   `id_belanja` int(11) NOT NULL,
-  `qty` int(11) NOT NULL
+  `qty` int(11) NOT NULL,
+  PRIMARY KEY (`id_makanan`,`id_belanja`),
+  KEY `id_belanja` (`id_belanja`),
+  CONSTRAINT `rincian_belanja_ibfk_1` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`),
+  CONSTRAINT `rincian_belanja_ibfk_2` FOREIGN KEY (`id_belanja`) REFERENCES `belanja` (`id_belanja`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+/*Data for the table `rincian_belanja` */
 
---
--- Struktur dari tabel `rincian_jajan`
---
+/*Table structure for table `rincian_jajan` */
+
+DROP TABLE IF EXISTS `rincian_jajan`;
 
 CREATE TABLE `rincian_jajan` (
   `no_nota` int(11) NOT NULL,
   `id_makanan` int(11) NOT NULL,
-  `qty` int(11) NOT NULL
+  `qty` int(11) NOT NULL,
+  PRIMARY KEY (`no_nota`,`id_makanan`),
+  KEY `id_makanan` (`id_makanan`),
+  CONSTRAINT `rincian_jajan_ibfk_1` FOREIGN KEY (`no_nota`) REFERENCES `nota` (`no_nota`),
+  CONSTRAINT `rincian_jajan_ibfk_2` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Indexes for dumped tables
---
+/*Data for the table `rincian_jajan` */
 
---
--- Indexes for table `belanja`
---
-ALTER TABLE `belanja`
-  ADD PRIMARY KEY (`id_belanja`);
-
---
--- Indexes for table `histori_makanan`
---
-ALTER TABLE `histori_makanan`
-  ADD KEY `no_nota` (`no_nota`);
-
---
--- Indexes for table `histori_nota`
---
-ALTER TABLE `histori_nota`
-  ADD PRIMARY KEY (`no_nota`);
-
---
--- Indexes for table `kadaluarsa`
---
-ALTER TABLE `kadaluarsa`
-  ADD KEY `id_makanan` (`id_makanan`);
-
---
--- Indexes for table `makanan`
---
-ALTER TABLE `makanan`
-  ADD PRIMARY KEY (`id_makanan`);
-
---
--- Indexes for table `meja`
---
-ALTER TABLE `meja`
-  ADD PRIMARY KEY (`no_meja`);
-
---
--- Indexes for table `nota`
---
-ALTER TABLE `nota`
-  ADD PRIMARY KEY (`no_nota`),
-  ADD KEY `no_meja` (`no_meja`);
-
---
--- Indexes for table `rincian_belanja`
---
-ALTER TABLE `rincian_belanja`
-  ADD PRIMARY KEY (`id_makanan`,`id_belanja`),
-  ADD KEY `id_belanja` (`id_belanja`);
-
---
--- Indexes for table `rincian_jajan`
---
-ALTER TABLE `rincian_jajan`
-  ADD PRIMARY KEY (`no_nota`,`id_makanan`),
-  ADD KEY `id_makanan` (`id_makanan`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `nota`
---
-ALTER TABLE `nota`
-  MODIFY `no_nota` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `histori_makanan`
---
-ALTER TABLE `histori_makanan`
-  ADD CONSTRAINT `histori_makanan_ibfk_1` FOREIGN KEY (`no_nota`) REFERENCES `histori_nota` (`no_nota`);
-
---
--- Ketidakleluasaan untuk tabel `kadaluarsa`
---
-ALTER TABLE `kadaluarsa`
-  ADD CONSTRAINT `kadaluarsa_ibfk_1` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`);
-
---
--- Ketidakleluasaan untuk tabel `nota`
---
-ALTER TABLE `nota`
-  ADD CONSTRAINT `nota_ibfk_1` FOREIGN KEY (`no_meja`) REFERENCES `meja` (`no_meja`);
-
---
--- Ketidakleluasaan untuk tabel `rincian_belanja`
---
-ALTER TABLE `rincian_belanja`
-  ADD CONSTRAINT `rincian_belanja_ibfk_1` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`),
-  ADD CONSTRAINT `rincian_belanja_ibfk_2` FOREIGN KEY (`id_belanja`) REFERENCES `belanja` (`id_belanja`);
-
---
--- Ketidakleluasaan untuk tabel `rincian_jajan`
---
-ALTER TABLE `rincian_jajan`
-  ADD CONSTRAINT `rincian_jajan_ibfk_1` FOREIGN KEY (`no_nota`) REFERENCES `nota` (`no_nota`),
-  ADD CONSTRAINT `rincian_jajan_ibfk_2` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
