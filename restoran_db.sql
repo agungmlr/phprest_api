@@ -16,6 +16,21 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`restoran_db` /*!40100 DEFAULT CHARACTER
 
 USE `restoran_db`;
 
+/*Table structure for table `bahan` */
+
+DROP TABLE IF EXISTS `bahan`;
+
+CREATE TABLE `bahan` (
+  `id_bahan` int(11) NOT NULL,
+  `nama_bahan` varchar(30) NOT NULL,
+  `tgl_kadaluarsa` date NOT NULL,
+  `stok` int(11) NOT NULL,
+  `status` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id_bahan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `bahan` */
+
 /*Table structure for table `belanja` */
 
 DROP TABLE IF EXISTS `belanja`;
@@ -59,21 +74,6 @@ CREATE TABLE `histori_nota` (
 
 /*Data for the table `histori_nota` */
 
-/*Table structure for table `kadaluarsa` */
-
-DROP TABLE IF EXISTS `kadaluarsa`;
-
-CREATE TABLE `kadaluarsa` (
-  `id_makanan` int(11) NOT NULL,
-  `tgl_kadaluarsa` date NOT NULL,
-  `stok` int(11) NOT NULL,
-  `status` int(1) DEFAULT NULL,
-  KEY `id_makanan` (`id_makanan`),
-  CONSTRAINT `kadaluarsa_ibfk_1` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `kadaluarsa` */
-
 /*Table structure for table `makanan` */
 
 DROP TABLE IF EXISTS `makanan`;
@@ -84,15 +84,11 @@ CREATE TABLE `makanan` (
   `deskripsi` varchar(60) NOT NULL,
   `harga_beli` int(11) NOT NULL,
   `harga_jual` int(11) NOT NULL,
+  `path` varchar(80) NOT NULL,
   PRIMARY KEY (`id_makanan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `makanan` */
-
-insert  into `makanan`(`id_makanan`,`nama`,`deskripsi`,`harga_beli`,`harga_jual`) values 
-(2,'Mie Goreng','Ditambah dengan telor dadar',16000,21000),
-(3,'Nasi Kuning','Enak Sekali',9000,13000),
-(4,'Ikan Asin','Khas Pangandaran',10000,25000);
 
 /*Table structure for table `meja` */
 
@@ -123,6 +119,22 @@ CREATE TABLE `nota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `nota` */
+
+/*Table structure for table `rincian_bahan` */
+
+DROP TABLE IF EXISTS `rincian_bahan`;
+
+CREATE TABLE `rincian_bahan` (
+  `id_makanan` int(11) NOT NULL,
+  `id_bahan` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  KEY `id_makanan` (`id_makanan`),
+  KEY `id_bahan` (`id_bahan`),
+  CONSTRAINT `rincian_bahan_ibfk_1` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`),
+  CONSTRAINT `rincian_bahan_ibfk_2` FOREIGN KEY (`id_bahan`) REFERENCES `bahan` (`id_bahan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `rincian_bahan` */
 
 /*Table structure for table `rincian_belanja` */
 
