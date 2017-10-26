@@ -90,6 +90,9 @@ CREATE TABLE `makanan` (
 
 /*Data for the table `makanan` */
 
+insert  into `makanan`(`id_makanan`,`nama`,`deskripsi`,`harga_beli`,`harga_jual`,`path`) values 
+(1,'Burger','Menggunakan daging pilihan',27000,35000,'127.0.0.1/restoran/image/burger.jpg');
+
 /*Table structure for table `meja` */
 
 DROP TABLE IF EXISTS `meja`;
