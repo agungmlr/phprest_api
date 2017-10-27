@@ -19,7 +19,7 @@
 			}
 			echo json_encode($data_array);
 
-			mysql_close($mysqli);
+			mysqli_close($mysqli);
 
 			break;
 
@@ -39,7 +39,7 @@
 					
 			}
 
-			mysql_close($mysqli);
+			mysqli_close($mysqli);
 			break;
 
 		case "get_makanan_by_id" :
@@ -53,7 +53,7 @@
 			}
 			echo json_encode($data_array);
 
-			mysql_close($mysqli);
+			mysqli_close($mysqli);
 			
 			break;
 
@@ -76,7 +76,7 @@
 				echo mysqli_error($mysqli);
 			}
 			
-			mysql_close($mysqli);
+			mysqli_close($mysqli);
 			break;
 
 		case "delete" :
@@ -89,7 +89,7 @@
             	echo mysqli_error($mysqli);
         	}
 
-        	mysql_close($mysqli);
+        	mysqli_close($mysqli);
 			break;
 		
 		default:
