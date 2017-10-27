@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.4.1 (64 bit)
-MySQL - 10.1.26-MariaDB : Database - restoran_db
+MySQL - 10.1.13-MariaDB : Database - restoran_db
 *********************************************************************
 */
 
@@ -74,6 +74,21 @@ CREATE TABLE `histori_nota` (
 
 /*Data for the table `histori_nota` */
 
+/*Table structure for table `kadaluarsa` */
+
+DROP TABLE IF EXISTS `kadaluarsa`;
+
+CREATE TABLE `kadaluarsa` (
+  `id_makanan` int(11) NOT NULL,
+  `tgl_kadaluarsa` date NOT NULL,
+  `stok` int(11) NOT NULL,
+  `status` int(1) DEFAULT NULL,
+  KEY `id_makanan` (`id_makanan`),
+  CONSTRAINT `kadaluarsa_ibfk_1` FOREIGN KEY (`id_makanan`) REFERENCES `makanan` (`id_makanan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `kadaluarsa` */
+
 /*Table structure for table `makanan` */
 
 DROP TABLE IF EXISTS `makanan`;
@@ -91,7 +106,11 @@ CREATE TABLE `makanan` (
 /*Data for the table `makanan` */
 
 insert  into `makanan`(`id_makanan`,`nama`,`deskripsi`,`harga_beli`,`harga_jual`,`path`) values 
-(1,'Burger','Menggunakan daging pilihan',27000,35000,'127.0.0.1/restoran/image/burger.jpg');
+(1,'Burger','Menggunakan daging pilihan',12000,16000,'img/burger.jpg'),
+(2,'Salad','Makanan sehat untuk tubuh yang kuat',6000,10000,'img/salad.png'),
+(3,'Nasi goreng','Sentuhan rempah menggugah sukma',13000,17000,'img/nasi_goreng.jpg'),
+(4,'Spaghetti','Lezat di lidah mantap di hati',16000,20000,'img/spaghetti.jpg'),
+(5,'Bakso','Bakso kuah pembangkit semangat',8000,12000,'img/bakso.jpg');
 
 /*Table structure for table `meja` */
 
