@@ -1,5 +1,9 @@
 <?php 
 
+	function open_window($url){
+   		echo '<script>window.location.replace ("'.$url.'", "mywindow","status=0,toolbar=0");</script>';
+	};
+
 	$server = "localhost";
 	$username = "root";
 	$password = "";
@@ -90,6 +94,22 @@
         	}
 
         	mysqli_close($mysqli);
+			break;
+
+		case "tampil_by_id" :
+			@$id = $_GET['id'];
+
+			$result = mysqli_query($mysqli, "SELECT * FROM makanan WHERE id_makanan = '$id'");
+			$data_array = array();
+
+			while ($data = mysqli_fetch_assoc($result)){
+				$data_array[] = $data;
+			}
+
+			open_window($data_array[0]['path']);
+
+			
+			
 			break;
 		
 		default:
