@@ -96,6 +96,8 @@ DROP TABLE IF EXISTS `makanan`;
 CREATE TABLE `makanan` (
   `id_makanan` int(11) NOT NULL,
   `nama` varchar(30) NOT NULL,
+  `jenis` smallint(6) NOT NULL,
+  `tag` varchar(20) NOT NULL,
   `deskripsi` varchar(60) NOT NULL,
   `harga_beli` int(11) NOT NULL,
   `harga_jual` int(11) NOT NULL,
@@ -105,12 +107,22 @@ CREATE TABLE `makanan` (
 
 /*Data for the table `makanan` */
 
-insert  into `makanan`(`id_makanan`,`nama`,`deskripsi`,`harga_beli`,`harga_jual`,`path`) values 
-(1,'Burger','Menggunakan daging pilihan',12000,16000,'img/burger.jpg'),
-(2,'Salad','Makanan sehat untuk tubuh yang kuat',6000,10000,'img/salad.png'),
-(3,'Nasi goreng','Sentuhan rempah menggugah sukma',13000,17000,'img/nasi_goreng.jpg'),
-(4,'Spaghetti','Lezat di lidah mantap di hati',16000,20000,'img/spaghetti.jpg'),
-(5,'Bakso','Bakso kuah pembangkit semangat',8000,12000,'img/bakso.jpg');
+insert  into `makanan`(`id_makanan`,`nama`,`jenis`,`tag`,`deskripsi`,`harga_beli`,`harga_jual`,`path`) values 
+(1,'Burger',0,'Fast Food','Menggunakan daging pilihan',12000,16000,'img/burger.jpg'),
+(2,'Salad',0,'Vegetarian','Makanan sehat untuk tubuh yang kuat',6000,10000,'img/salad.png'),
+(3,'Nasi Goreng',0,'Indonesian','Sentuhan rempah menggugah sukma',13000,17000,'img/nasi_goreng.jpg'),
+(4,'Spaghetti',0,'Italian','Lezat di lidah mantap di hati',16000,20000,'img/spaghetti.jpg'),
+(5,'Bakso',0,'Indonesian','Bakso kuah pembangkit semangat',8000,12000,'img/bakso.jpeg'),
+(6,'Bandrek',1,'Indonesian','Penghangat di kala penat',5000,8000,'img/bandrek.jpg'),
+(7,'Bajigur',1,'Indonesian','Pembuncah kegalauan yang manjur',7000,10000,'img/bajigur.jpg'),
+(8,'Moccacino',1,'Italian','Kopi penghilang sepi',9000,12000,'img/moccacino.jpg'),
+(9,'Cola',1,'Fast Food','Moodbooster di setiap suasana',4000,7000,'img/cola.jpg'),
+(10,'Teh Hangat',1,'Vegetarian','Mari ngeteh mari bicara',4000,6500,'img/teh.jpg'),
+(11,'Wajit',2,'Indonesian','Panganan manis dalam bungkusan unik',4000,6000,'img/wajit.jpg'),
+(12,'Ali Agrem',2,'Indonesian','Bulat dan manis',5000,8000,'img/ali_agrem.jpg'),
+(13,'Tiramisu',2,'Italian','Kue manis khas italia',10000,14000,'img/tiramisu.jpeg'),
+(14,'Cherry Pie',2,'Fast Food','Kudapan manis khas amrik',8000,11000,'img/cherry_pie.jpeg'),
+(15,'Strawberry Chesscake',2,'Vegetarian','Penutup yang pas untuk para vegan',12000,16000,'img/strawberry_chesscake.jpg');
 
 /*Table structure for table `meja` */
 
